@@ -1,0 +1,10 @@
+Enter "help" into the input to get help.
+
+This is a simple calculator application.
+You need to pass input for a calculation result.
+The input must have the format '<number><operation><number>' (without spaces!) i.e. '5*6'
+The calculator supports the operations:
+ +  positive integer addition
+ -  positive integer subtraction (with positive result)
+ *  positive integer multiplication
+ /  positive integer division
