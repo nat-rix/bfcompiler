@@ -1,0 +1,5 @@
+(a)
+
+set a 3642
+
+print_num a

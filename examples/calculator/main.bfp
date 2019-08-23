@@ -1,0 +1,131 @@
+(inchr, pluszeichen, minuszeichen, malzeichen, geteiltzeichen, fragezeichen, hilfe, op1, op1', op2, op2', b1, b2, op1?, zehn, operator, operator_nicht_valide?)
+
+getchr inchr
+setchar fragezeichen "?"
+setchar pluszeichen "+"
+setchar minuszeichen "-"
+setchar malzeichen "*"
+setchar geteiltzeichen "/"
+setchar hilfe "h"
+set op1? 1
+setchar operator "?"
+set operator_nicht_valide? 1
+
+print_text "\n------------------------------------------------------------\n"
+print_text "==================== Simple Calculator ====================\n"
+print_text "------------------------------------------------------------\n\n"
+
+if= inchr hilfe
+    print_text "This is a simple calculator application.\n"
+    print_text "You need to pass input for a calculation result.\n"
+    print_text "The input must have the format '<number><operation><number>' (without spaces!) i.e. '5*6'\n"
+    print_text "The calculator supports the operations:\n"
+    print_text " +  positive integer addition\n"
+    print_text " -  positive integer subtraction (with positive result)\n"
+    print_text " *  positive integer multiplication\n"
+    print_text " /  positive integer division\n\n"
+    set operator_nicht_valide? 0
+    setchar operator "h"
+    set inchr 0
+endif
+
+while inchr
+    set b1 1
+    if= inchr pluszeichen
+        set b1 0
+        set op1? 0
+        setchar operator "+"
+    endif
+    if= inchr minuszeichen
+        set b1 0
+        set op1? 0
+        setchar operator "-"
+    endif
+    if= inchr malzeichen
+        set b1 0
+        set op1? 0
+        setchar operator "*"
+    endif
+    if= inchr geteiltzeichen
+        set b1 0
+        set op1? 0
+        setchar operator "/"
+    endif
+    chr_to_int inchr
+    if_clr b1
+        set b2 1
+        if op1?
+            decr b2
+            mov op1 op1'
+            while op1'
+                set zehn 10
+                mov zehn op1
+                decr op1'
+            endwhile
+            mov inchr op1
+        endif
+        if_clr b2
+            mov op2 op2'
+            while op2'
+                set zehn 10
+                mov zehn op2
+                decr op2'
+            endwhile
+            mov inchr op2
+        endif
+    endif
+    getchr inchr
+endwhile
+
+if= operator fragezeichen
+    set operator_nicht_valide? 0
+    print_text "Fehler!\nKein Operator wurde angegeben"
+endif
+if= operator pluszeichen
+    set operator_nicht_valide? 0
+    print_text "Rechnung: "
+    print_num op1
+    print_text " + "
+    print_num op2
+    mov op2 op1
+    print_text "\nErgebnis: = "
+    print_num op1
+endif
+if= operator minuszeichen
+    set operator_nicht_valide? 0
+    print_text "Rechnung: "
+    print_num op1
+    print_text " - "
+    print_num op2
+    while op2
+        decr op2
+        decr op1
+    endwhile
+    print_text "\nErgebnis: = "
+    print_num op1
+endif
+if= operator malzeichen
+    set operator_nicht_valide? 0
+    print_text "Rechnung: "
+    print_num op1
+    print_text " * "
+    print_num op2
+    mult op1 op2
+    print_text "\nErgebnis: = "
+    print_num op1
+endif
+if= operator geteiltzeichen
+    set operator_nicht_valide? 0
+    print_text "Rechnung: "
+    print_num op1
+    print_text " // "
+    print_num op2
+    div op1 op2
+    print_text "\nErgebnis: = "
+    print_num op1
+endif
+if_clr operator_nicht_valide?
+    print_text "Fehler!\nDer Operator""
+    print_raw operator
+    print_text "" ist noch nicht vorhanden"
+endif
