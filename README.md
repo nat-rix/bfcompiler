@@ -41,3 +41,13 @@ Commands:
 * `div <var> <var>` - Divides "first / second" writing the result into "first"
 * `mod <var> <var>` - Modulo. warning: I am too lazy to test this
 * `mult <var> <var>` - Multiplicates "first * second" writing the result into "first"
+
+## Hello World!
+
+You can see examples under `examples/`
+
+```
+()
+
+print_text "Hello World!\n"
+```
